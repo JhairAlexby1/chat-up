@@ -1,4 +1,4 @@
-.button {
+.button1 {
     padding: 15px 25px;
     border: unset;
     border-radius: 15px;
@@ -14,7 +14,7 @@
     overflow: hidden;
    }
    
-   .button::before {
+   .button1::before {
     content: "";
     position: absolute;
     top: 0;
@@ -29,11 +29,11 @@
     transition: all 250ms
    }
    
-   .button:hover {
+   .button1:hover {
     color: #e8e8e8;
    }
    
-   .button:hover::before {
+   .button1:hover::before {
     width: 100%;
    }
 
