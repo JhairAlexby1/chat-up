@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Jockey+One&display=swap');
+
 body {
   background-color: black;
+  font-family: 'Jockey One', sans-serif;
 }
+
