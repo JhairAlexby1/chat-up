@@ -63,7 +63,7 @@ export default function LandingPage() {
               className="mx-4 rounded-3xl"
               src="/images/photosLanding/1.jpg"
               width={333}
-              height={250}
+              height={333}
               alt="Picture of the author"
             />
 
@@ -71,7 +71,7 @@ export default function LandingPage() {
               className="mx-4 rounded-3xl"
               src="/images/photosLanding/2.jpg"
               width={333}
-              height={250}
+              height={333}
               alt="Picture of the author"
             />
 
@@ -79,7 +79,7 @@ export default function LandingPage() {
               className="mx-4 rounded-3xl"
               src="/images/photosLanding/3.jpg"
               width={333}
-              height={250}
+              height={333}
               alt="Picture of the author"
             />
           </div>
