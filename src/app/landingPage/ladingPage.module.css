@@ -36,3 +36,16 @@
    .button:hover::before {
     width: 100%;
    }
+
+
+
+.jockeyFont {
+    font-family: 'Jockey One', sans-serif;
+        font-size: 35px;
+        font-weight: bold;
+}
+
+.text2{
+    font-family: 'Jockey One', sans-serif;
+    font-size: 20px;
+}
