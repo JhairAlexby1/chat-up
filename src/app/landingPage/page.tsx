@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function LandingPage() {
   return (
     <>
-      <div className="flex justify-between items-center text-white my-5	mx-10	">
+      <div className="flex justify-between items-center text-white my-5	mx-10 ">
         <div className="">LOGO</div>
 
         <div className="space-x-10">
