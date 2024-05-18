@@ -1,0 +1,21 @@
+.contenedor {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .imgPersona {
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .boton {
+    display: block;
+    margin: 1rem auto 0;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
