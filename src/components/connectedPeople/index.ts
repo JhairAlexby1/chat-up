@@ -1,0 +1,1 @@
+import {ConnectedPeople} from './ConnectedPeople'
