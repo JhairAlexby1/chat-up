@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import styles from "./FormSignUp.module.css";
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
+
 
 export const FormSignUp = () => {
 
@@ -10,11 +12,13 @@ export const FormSignUp = () => {
   const [maternalSurname, setMaternalSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter()
+
 
 
   function btnRegistro(): void {
     alert(name + ' ' + paternalSurname + ' ' + maternalSurname + ' ' + email + ' ' + password);
-    <Link href=""></Link> //Pendiente
+    router.push('/homePage');
   }
 
   return (

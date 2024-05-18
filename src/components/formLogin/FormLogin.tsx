@@ -2,15 +2,18 @@
 import Link from "next/link";
 import { useState } from "react";
 import styles from "./FormLogin.module.css";
+import { useRouter } from 'next/navigation'
 
 export const FormLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter()
+
 
 
   function btnLogin(): void {
-    alert(email + ' ' + password);
-    <Link href=""></Link> //Pendiente
+    router.push('/homePage');
+
   }
 
 
