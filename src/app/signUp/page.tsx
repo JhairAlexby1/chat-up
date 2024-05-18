@@ -1,9 +1,10 @@
 import { FormSignUp } from "@/components/formSignUp/FormSignUp";
 import Image from "next/image";
+import styles from "./page.module.css";
 
 export default function SignUp() {
   return (
-    <>
+    <div className={styles.container}>
       <div>
         <Image
           className="mx-4 rounded-3xl"
@@ -15,6 +16,6 @@ export default function SignUp() {
       </div>
 
       <FormSignUp />
-    </>
+    </div>
   );
 }
