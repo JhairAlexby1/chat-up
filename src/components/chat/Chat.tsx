@@ -2,22 +2,26 @@
 import React, { useState } from 'react';
 import styles from './Chat.module.css';
 
+interface Mensaje {
+  text: string;
+  sender: 'user' | 'bot';
+}
+
 export const Chat = () => {
-  const [mensajes, setMensajes] = useState([]);
+  const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [nuevoMensaje, setNuevoMensaje] = useState('');
 
   const btnEnviarMensaje = () => {
     if (nuevoMensaje.trim() !== '') {
       setMensajes([...mensajes, { text: nuevoMensaje, sender: 'user' }]);
       setNuevoMensaje('');
-
       setTimeout(() => {
         setMensajes(prevMensajes => [...prevMensajes, { text: 'Respuesta automática', sender: 'bot' }]);
       }, 1000);
     }
   };
 
-  const cambioMensaje = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleCambioMensaje = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNuevoMensaje(event.target.value);
   };
 
@@ -34,7 +38,7 @@ export const Chat = () => {
         <input
           type="text"
           value={nuevoMensaje}
-          onChange={cambioMensaje}
+          onChange={handleCambioMensaje}
           placeholder="Escribe un mensaje..."
           className={styles.inputMensaje}
         />
