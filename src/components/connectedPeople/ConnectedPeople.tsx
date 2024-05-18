@@ -5,7 +5,7 @@ export const ConnectedPeople = () => {
   const people = ['Persona 1', 'Persona 2', 'jhair', 'jhair', 'jhair'];
 
   return (
-    <div>
+    <div className={styles.contenedor}>
       <h1>UP CHAT</h1>
 
       <h2 className={styles.textConect}>Personas Conectadas</h2>

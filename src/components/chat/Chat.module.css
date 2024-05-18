@@ -1,0 +1,73 @@
+.contenedor {
+    height: 100vh;
+    border: 1px solid #8306BD;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .historial {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+  }
+  
+  .historial::-webkit-scrollbar {
+    display: none; 
+  }
+  
+  .entrada {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .inputMensaje {
+    flex-grow: 1;
+    margin-right: 20px;
+    padding: 10px;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #000000;
+  }
+  
+  .botonEnviar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #8306BD;
+    cursor: pointer;
+  }
+  
+  .mensajeUsuario {
+    align-self: flex-end;
+    background-color: #8306BD;
+    color: #ffffff;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .mensajeBot {
+    align-self: flex-start;
+    background-color: #6c757d;
+    color: #ffffff;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .mensajeWrapper {
+    display: flex;
+    flex-direction: column;
+  }

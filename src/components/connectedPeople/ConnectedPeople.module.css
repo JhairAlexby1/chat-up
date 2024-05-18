@@ -1,4 +1,7 @@
-
+.contenedor {
+    border: 1px solid #8306BD; 
+    height: 100vh;
+}
 
 .imgPersona{
     border-radius: 100%;
