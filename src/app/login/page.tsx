@@ -1,6 +1,12 @@
 import Image from "next/image";
 import styles from "./login.module.css";
 import {FormLogin}  from "@/components/formLogin/FormLogin";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Login Page",
+  description: "Login Page",
+};
 
 export default function Login() {
     return (

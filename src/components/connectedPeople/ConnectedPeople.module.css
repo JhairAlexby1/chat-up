@@ -1,0 +1,15 @@
+
+
+.imgPersona{
+    border-radius: 100%;
+}
+
+.personas {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.textConect{
+    margin-top: 40px;
+}

@@ -1,6 +1,12 @@
 import { FormSignUp } from "@/components/formSignUp/FormSignUp";
 import Image from "next/image";
 import styles from "./page.module.css";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sign Up Page",
+  description: "Sign Up Page",
+};
 
 export default function SignUp() {
   return (
