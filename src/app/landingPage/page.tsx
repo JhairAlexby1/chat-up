@@ -16,9 +16,7 @@ export default function LandingPage() {
         <div className="">LOGO</div>
 
         <div className="space-x-10">
-          <Link href="../login">
-            <button className={styles.button1}>Team</button>
-          </Link>
+        
 
           <Link href="../login">
             <button className={styles.button1}>Login</button>
@@ -36,9 +34,7 @@ export default function LandingPage() {
             Más que una red social, un <br /> movimiento de aceptación en la
             <span className="text-purple-800"> UP</span>
           </h1>
-          <Link href="../signUp">
-            <button className={styles.button1}>Registrarse</button>
-          </Link>{" "}
+          
         </div>
 
         <div className="ml-4">
