@@ -11,6 +11,12 @@ export const Chat = () => {
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [nuevoMensaje, setNuevoMensaje] = useState('');
 
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    btnEnviarMensaje();
+  }
+};
+
   const btnEnviarMensaje = () => {
     if (nuevoMensaje.trim() !== '') {
       setMensajes([...mensajes, { text: nuevoMensaje, sender: 'user' }]);
@@ -38,7 +44,8 @@ export const Chat = () => {
         <input
           type="text"
           value={nuevoMensaje}
-          onChange={handleCambioMensaje}
+          onChange={(e) => setNuevoMensaje(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Escribe un mensaje..."
           className={styles.inputMensaje}
         />
