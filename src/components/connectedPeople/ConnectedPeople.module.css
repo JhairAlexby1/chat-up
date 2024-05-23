@@ -1,18 +1,24 @@
 .contenedor {
-    border: 1px solid #8306BD; 
+    border: 1px solid #8306BD;
     height: 100vh;
-}
-
-.imgPersona{
+    overflow-y: auto; 
+    scrollbar-width: none; 
+  }
+  
+  .contenedor::-webkit-scrollbar {
+    display: none; 
+  }
+  
+  .imgPersona {
     border-radius: 100%;
-}
-
-.personas {
+  }
+  
+  .personas {
     display: flex;
     align-items: center;
     margin-top: 20px;
-}
-
-.textConect{
+  }
+  
+  .textConect {
     margin-top: 40px;
-}
+  }
