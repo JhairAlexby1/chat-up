@@ -3,6 +3,7 @@ import styles from './homePage.module.css';
 import { Metadata } from 'next';
 import { Chat } from '@/components/chat/Chat';
 import { UserProfile } from '@/components/userProfile/UserProfile';
+import { RegisteredPersons } from '@/components/registeredPersons/RegisteredPersons';
 
 
 export const metadata: Metadata = {
@@ -16,7 +17,13 @@ export default function HomePage() {
         <div className={styles.containerHome}>
             <ConnectedPeople />
             <Chat />
-            <UserProfile />
+
+            <div >
+                <UserProfile />
+                <RegisteredPersons />
+            </div>
+
+
         </div>
     )
 }

@@ -1,0 +1,1 @@
+import { RegisteredPersons } from './RegisteredPersons';
