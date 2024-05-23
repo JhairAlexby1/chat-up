@@ -3,6 +3,7 @@ import styles from "./UserProfile.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+
 export const UserProfile = () => {
   const users = ["Jhair"];
 
