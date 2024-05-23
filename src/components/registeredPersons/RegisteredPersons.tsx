@@ -8,7 +8,7 @@ export const RegisteredPersons = () => {
   const [userCount, setUserCount] = useState(0);
   const [showCount, setShowCount] = useState(false);
 
-  const handleClick = () => {
+  const btn = () => {
     axios.get('http://localhost:3000/usuarios')
       .then(response => {
         setUserCount(response.data.length);
@@ -24,7 +24,7 @@ export const RegisteredPersons = () => {
       <h1 className="text-3xl font-bold text-blue-500 hover:text-blue-700 transition-colors duration-300 ">
         Da click para saber cuantos UPS somos :)
       </h1>{" "}
-      <button className={styles.button} onClick={handleClick}>
+      <button className={styles.button} onClick={btn}>
         Mostrar UPS
       </button>
       {showCount && <p className={styles.let}>Total de usuarios: {userCount}</p>}

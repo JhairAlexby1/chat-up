@@ -19,7 +19,6 @@ export const ConnectedPeople = () => {
         const response = await axios.get<Person[]>('http://localhost:3000/usuarios');
         setPeople(response.data);
 
-        // Immediately fetch again after receiving a response
         fetchPeople();
       } catch (error) {
         console.error('Error fetching people:', error);
