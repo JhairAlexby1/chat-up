@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import styles from "./FormLogin.module.css";
 import { useRouter } from 'next/navigation'
+import axios from 'axios';
 
 export const FormLogin = () => {
   const [email, setEmail] = useState('');
@@ -11,10 +12,18 @@ export const FormLogin = () => {
 
 
 
-  function btnLogin(): void {
+ const btnLogin = async () => {
+  try {
+    const response = await axios.post('http://localhost:3000/usuarios/login', {
+      email,
+      password
+    }, ); 
+    console.log(response.data);
     router.push('/homePage');
-
+  } catch (error) {
+    console.error(error);
   }
+}
 
 
   return (
