@@ -18,14 +18,14 @@ export const ConnectedPeople = () => {
       try {
         const response = await axios.get<Person[]>('http://localhost:3000/usuarios');
         setPeople(response.data);
-
-        fetchPeople();
       } catch (error) {
         console.error('Error fetching people:', error);
       }
     };
 
-    fetchPeople();
+    const intervalId = setInterval(fetchPeople, 5000); 
+
+    return () => clearInterval(intervalId); 
   }, []);
 
   return (
