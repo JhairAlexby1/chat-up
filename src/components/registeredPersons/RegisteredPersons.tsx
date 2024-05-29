@@ -9,7 +9,7 @@ export const RegisteredPersons = () => {
   const [showCount, setShowCount] = useState(false);
 
   const btn = () => {
-    axios.get('http://localhost:3000/usuarios')
+    axios.get('http://localhost:3001/usuarios')
       .then(response => {
         setUserCount(response.data.length);
         setShowCount(true);

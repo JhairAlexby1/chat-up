@@ -16,7 +16,7 @@ export const ConnectedPeople = () => {
   useEffect(() => {
     const fetchPeople = async () => {
       try {
-        const response = await axios.get<Person[]>('http://localhost:3000/usuarios');
+        const response = await axios.get<Person[]>('http://localhost:3001/usuarios');
         setPeople(response.data);
       } catch (error) {
         console.error('Error fetching people:', error);

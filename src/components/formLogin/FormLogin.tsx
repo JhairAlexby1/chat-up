@@ -14,10 +14,10 @@ export const FormLogin = () => {
 
  const btnLogin = async () => {
   try {
-    const response = await axios.post('http://localhost:3000/usuarios/login', {
+    const response = await axios.post('http://localhost:3001/usuarios/login', {
       email,
       password
-    }, ); 
+    }, {withCredentials: true} );  
     console.log(response.data);
     router.push('/homePage');
   } catch (error) {
