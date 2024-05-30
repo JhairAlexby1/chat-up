@@ -4,6 +4,7 @@ import styles from "./FormSignUp.module.css";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
 import axios from "axios";
+import Swal from 'sweetalert2'; 
 
 
 export const FormSignUp = () => {
@@ -12,26 +13,50 @@ export const FormSignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter()
+  const [hasEmptyFields, setHasEmptyFields] = useState(false);
 
 
 
   const btnRegistro = async (event: React.FormEvent) => {
-  event.preventDefault();
+    event.preventDefault();
+  
+    if (!name || !email || !password) {
+      setHasEmptyFields(true);
+      return;
+    }
+  
+    setHasEmptyFields(false);
+  
+    try {
+      const response = await axios.post('http://localhost:3001/usuarios', {
+        nombre: name,
+        email: email,
+        password: password
+      });
+  
+      console.log(response.data);
+  
+      Swal.fire({
+        icon: 'success',
+        title: '¡Registro exitoso!',
+        text: 'Tu cuenta ha sido creada correctamente, Ahora inicia sesion.',
+        confirmButtonText: 'Iniciar sesión'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push('/login');
+        }
+      });
+    } catch (error) {
+      console.error(error);
+  
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Ha ocurrido un error durante el registro. Por favor, inténtalo nuevamente.',
+      });
+    }
+  };
 
-  try {
-    const response = await axios.post('http://localhost:3001/usuarios', {
-      nombre: name,
-      email: email,
-      password: password
-    });
-
-    console.log(response.data);
-
-    router.push('/login');
-  } catch (error) {
-    console.error(error);
-  }
-};
 
   return (
     <div className={styles.containerForm}>
@@ -40,6 +65,10 @@ export const FormSignUp = () => {
           <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
             Crea Una Nueva Cuenta
           </h4>
+
+          {hasEmptyFields && (
+          <p className="text-red-500">Por favor, llena todos los campos obligatorios.</p>
+        )}
 
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-4 flex flex-col gap-6">

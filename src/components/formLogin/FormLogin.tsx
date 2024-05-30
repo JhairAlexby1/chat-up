@@ -5,6 +5,8 @@ import styles from "./FormLogin.module.css";
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
+
 
 export const FormLogin = () => {
   const [email, setEmail] = useState('');
@@ -14,19 +16,24 @@ export const FormLogin = () => {
 
 
 
- const btnLogin = async () => {
-  try {
-    const response = await axios.post('http://localhost:3001/usuarios/login', {
-      email,
-      password
-    }, {withCredentials: true} );  
-    console.log(response.data);
-    Cookies.set('userId', response.data.userId);
-    router.push('/homePage');
-  } catch (error) {
-    console.error(error);
+  const btnLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:3001/usuarios/login', {
+        email,
+        password
+      }, { withCredentials: true });
+      console.log(response.data);
+      Cookies.set('userId', response.data.userId);
+      router.push('/homePage');
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Correo electrónico o contraseña incorrectos',
+      });
+    }
   }
-}
 
 
   return (
