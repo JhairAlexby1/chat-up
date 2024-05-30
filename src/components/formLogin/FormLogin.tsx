@@ -34,7 +34,7 @@ export const FormLogin = () => {
       <div className="flex min-h-screen items-center justify-center">
         <div className="relative flex flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
           <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-            Crea Una Nueva Cuenta
+            Inicia sesion
           </h4>
 
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">

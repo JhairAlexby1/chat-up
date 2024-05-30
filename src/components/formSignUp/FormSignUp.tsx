@@ -19,7 +19,7 @@ export const FormSignUp = () => {
   event.preventDefault();
 
   try {
-    const response = await axios.post('http://localhost:3000/usuarios', {
+    const response = await axios.post('http://localhost:3001/usuarios', {
       nombre: name,
       email: email,
       password: password
@@ -27,7 +27,7 @@ export const FormSignUp = () => {
 
     console.log(response.data);
 
-    router.push('/homePage');
+    router.push('/login');
   } catch (error) {
     console.error(error);
   }
