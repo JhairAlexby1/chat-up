@@ -1,3 +1,4 @@
+//lonngo polling
 "use client"
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -15,16 +16,18 @@ export const ConnectedPeople = () => {
     const fetchPeople = async () => {
       try {
         const response = await axios.get<Person[]>('http://localhost:3001/usuarios/conected');
-        console.log("prueba de terminal"+response.data); 
         setPeople(response.data);
       } catch (error) {
         console.error('Error fetching people:', error);
+      } finally {
+        setTimeout(fetchPeople, 5000); //repetir
       }
     };
 
-    const intervalId = setInterval(fetchPeople, 5000);
+    
+    fetchPeople();
 
-    return () => clearInterval(intervalId);
+
   }, []);
 
   return (
@@ -43,7 +46,6 @@ export const ConnectedPeople = () => {
             alt={`Picture of ${person.nombre}`}
             priority
           />
-
           <p className='text-white'>{person.nombre}</p>
         </div>
       ))}
