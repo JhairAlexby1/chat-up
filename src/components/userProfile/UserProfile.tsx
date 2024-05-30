@@ -27,7 +27,7 @@ export const UserProfile = () => {
             height={100}
             alt={""}
           />
-          <h2>{user}</h2>
+          
         </div>
       ))}
       <button onClick={btnCerrarSesion} className={styles.boton}>
