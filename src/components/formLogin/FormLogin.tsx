@@ -4,11 +4,13 @@ import { useState } from "react";
 import styles from "./FormLogin.module.css";
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const FormLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter()
+  const [userId, setUserId] = useState(null);
 
 
 
@@ -19,6 +21,7 @@ export const FormLogin = () => {
       password
     }, {withCredentials: true} );  
     console.log(response.data);
+    Cookies.set('userId', response.data.userId);
     router.push('/homePage');
   } catch (error) {
     console.error(error);
