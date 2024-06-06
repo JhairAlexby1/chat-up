@@ -1,33 +1,33 @@
 "use client";
-//aqui estoy usando short polling , aqui el usuario tiene que solicitar los datos cada rato para ver el numero actualizado
-import { useState } from "react";
-import axios from 'axios';
+//short solicitudes regulares
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./RegisteredPersons.module.css";
 
 export const RegisteredPersons = () => {
   const [userCount, setUserCount] = useState(0);
-  const [showCount, setShowCount] = useState(false);
 
-  const btn = () => {
-    axios.get('http://localhost:3001/usuarios')
-      .then(response => {
-        setUserCount(response.data.length);
-        setShowCount(true);
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      });
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      axios
+        .get("http://localhost:3001/usuarios")
+        .then((response) => {
+          setUserCount(response.data.length); // Actualiza el estado con los datos recividos 
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
+    }, 5000); // Actualizaxion
+
+    return () => clearInterval(interval); // limpia el estado y la desmonta 
+  }, []); 
 
   return (
     <div className={styles.contenedor}>
-      <h1 className="text-3xl font-bold text-blue-500 hover:text-blue-700 transition-colors duration-300 ">
-        Da click para saber cuantos UPS somos :)
-      </h1>{" "}
-      <button className={styles.button} onClick={btn}>
-        Mostrar UPS
-      </button>
-      {showCount && <p className={styles.let}>Total de usuarios: {userCount}</p>}
+      <h1 className="text-3xl font-bold text-blue-500 hover:text-blue-700 transition-colors duration-300">
+        Número de usuarios actualizados cada 5 segundos
+      </h1>
+      <p className={styles.let}>Total de usuarios: {userCount}</p>
     </div>
   );
 };

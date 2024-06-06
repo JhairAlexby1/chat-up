@@ -1,6 +1,5 @@
+//lonngo polling conexion abierta
 "use client"
-//aqui implemento long polling para que se actualice la lista de personas conectadas en tiempo real
-//falta modificarlo para que solo muestre los que estan en linea
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from "./ConnectedPeople.module.css";
@@ -11,21 +10,24 @@ interface Person {
 }
 
 export const ConnectedPeople = () => {
-  const [people, setPeople] = useState<Person[]>([]);
+  const [people, setPeople] = useState<Person[]>([]); //almacen
 
   useEffect(() => {
-    const fetchPeople = async () => {
+    const fetchPeople = async () => { //solicitud
       try {
-        const response = await axios.get<Person[]>('http://localhost:3001/usuarios');
-        setPeople(response.data);
+        const response = await axios.get<Person[]>('http://localhost:3001/usuarios/conected');
+        setPeople(response.data); 
       } catch (error) {
         console.error('Error fetching people:', error);
+      } finally {
+        setTimeout(fetchPeople, 5000); //repetir
       }
     };
 
-    const intervalId = setInterval(fetchPeople, 5000); 
+    
+    fetchPeople();
 
-    return () => clearInterval(intervalId); 
+
   }, []);
 
   return (
@@ -41,11 +43,10 @@ export const ConnectedPeople = () => {
             src="/images/photosPeople/persona.jpg"
             width={30}
             height={30}
-            alt={`Picture of ${person.nombre}`} 
+            alt={`Picture of ${person.nombre}`}
             priority
           />
-
-          <p className='text-white'>{person.nombre}</p> 
+          <p className='text-white'>{person.nombre}</p>
         </div>
       ))}
     </div>
