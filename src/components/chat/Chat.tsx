@@ -1,15 +1,25 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+
+import Cookies from "js-cookie";
+import React, {useEffect, useState} from 'react';
 import styles from './Chat.module.css';
+import jwt from 'jsonwebtoken';
 
 interface Mensaje {
-  text: string;
-  sender: 'user' | 'bot';
+  texto: string;
+  usuario: string;
+    chat: string;
 }
 
+
+
 export const Chat = () => {
+  const ws = new WebSocket('ws://localhost:3030');
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [nuevoMensaje, setNuevoMensaje] = useState('');
+  const cookie: string | undefined = Cookies.get('token');
+  // @ts-ignore
+  const user = jwt.verify(cookie, "secret");
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
   if (event.key === 'Enter') {
@@ -19,11 +29,7 @@ export const Chat = () => {
 
   const btnEnviarMensaje = () => {
     if (nuevoMensaje.trim() !== '') {
-      setMensajes([...mensajes, { text: nuevoMensaje, sender: 'user' }]);
-      setNuevoMensaje('');
-      setTimeout(() => {
-        setMensajes(prevMensajes => [...prevMensajes, { text: 'Respuesta automática', sender: 'bot' }]);
-      }, 1000);
+      ws.send(JSON.stringify({ event: 'message', data: {texto: nuevoMensaje, usuario: user.id, chat: user.chats[0] } }));
     }
   };
 
@@ -31,12 +37,24 @@ export const Chat = () => {
     setNuevoMensaje(event.target.value);
   };
 
+  useEffect(() => {
+      ws.onopen = () => {
+            console.log('Conectado');
+      }
+      ws.send(JSON.stringify({ event: 'listening', data: user.id }));
+        ws.onmessage = (event) => {
+            const mensaje = JSON.parse(event.data);
+            if (mensaje.event === 'messages')
+            setMensajes(mensaje.data);
+        };
+  },[mensajes, user.id, ws]);
+
   return (
     <div className={styles.contenedor}>
       <div className={styles.historial}>
         {mensajes.map((mensaje, index) => (
-          <div key={index} className={mensaje.sender === 'user' ? styles.mensajeUsuario : styles.mensajeBot}>
-            {mensaje.text}
+          <div key={index} className={mensaje.usuario === 'user' ? styles.mensajeUsuario : styles.mensajeBot}>
+            {mensaje.texto}
           </div>
         ))}
       </div>
