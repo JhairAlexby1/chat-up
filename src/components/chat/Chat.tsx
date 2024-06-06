@@ -12,17 +12,41 @@ interface Mensaje {
     chat: string;
 }
 
+interface JWTPayloader {
+  id: string;
+  chats: string[]; 
+  texto: string;
+  usuario: string;
+  conectado: boolean;
+}
+
+
+
+
+
+
 
 
 export const Chat = () => {
   const ws = new WebSocket('ws://localhost:3030');
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [nuevoMensaje, setNuevoMensaje] = useState('');
-  const cookie = Cookies.get('token') as string;
-  console.log(cookie);
-  const secret = new TextEncoder().encode('secret');
-  const user = jwtVerify(cookie, secret);
-  console.log(user);
+  const [payload, setPayload] = useState<JWTPayloader>({id: '', chats: [], texto: '', usuario: '', conectado: false});
+  const token = Cookies.get('token');
+console.log(token);
+
+  const decodeToken = async (token: string) => {
+    const secret = new TextEncoder().encode('secret');
+    const decoded = jwt.decode(token, { complete: true });
+    if (decoded) {
+      const payload = await jwtVerify(token, secret) as unknown as {
+        chats: any;
+        id: unknown; payload: JWTPayloader 
+  };
+      return payload;
+    }
+  }
+
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
   if (event.key === 'Enter') {
@@ -32,7 +56,7 @@ export const Chat = () => {
 
   const btnEnviarMensaje = () => {
     if (nuevoMensaje.trim() !== '') {
-      ws.send(JSON.stringify({ event: 'message', data: {texto: nuevoMensaje, usuario: user.id, chat: user.chats[0] } }));
+      ws.send(JSON.stringify({ event: 'message', data: {texto: nuevoMensaje, usuario: payload.payload.id, chat: payload.payload.chats[0] } }));
     }
   };
 
@@ -41,16 +65,30 @@ export const Chat = () => {
   };
 
   useEffect(() => {
-      ws.onopen = () => {
-            console.log('Conectado');
+    const fetchData = async () => {
+      if (token) {
+        const decodedPayload = await decodeToken(token);
+        if (decodedPayload) {
+          setPayload({ ...decodedPayload, texto: '', usuario: '', conectado: false, id: decodedPayload.id as string });
+        }
       }
-      ws.send(JSON.stringify({ event: 'listening', data: user.chats[0] }));
-        ws.onmessage = (event) => {
-            const mensaje = JSON.parse(event.data);
-            if (mensaje.event === 'messages')
-            setMensajes(mensaje.data);
-        };
-  },[mensajes, user.id, ws]);
+    };
+  
+    fetchData();
+  
+    ws.onopen = () => {
+      console.log('Conectado');
+    };
+  
+    ws.send(JSON.stringify({ event: 'listening', data: payload.chats[0] }));
+  
+    ws.onmessage = (event) => {
+      const mensaje = JSON.parse(event.data);
+      if (mensaje.event === 'messages') {
+        setMensajes(mensaje.data);
+      }
+    };
+  }, [mensajes, payload.id, token, ws]);
 
   return (
     <div className={styles.contenedor}>
