@@ -1,4 +1,4 @@
-//lonngo polling
+//lonngo polling conexion abierta
 "use client"
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -10,13 +10,13 @@ interface Person {
 }
 
 export const ConnectedPeople = () => {
-  const [people, setPeople] = useState<Person[]>([]);
+  const [people, setPeople] = useState<Person[]>([]); //almacen
 
   useEffect(() => {
-    const fetchPeople = async () => {
+    const fetchPeople = async () => { //solicitud
       try {
         const response = await axios.get<Person[]>('http://localhost:3001/usuarios/conected');
-        setPeople(response.data);
+        setPeople(response.data); 
       } catch (error) {
         console.error('Error fetching people:', error);
       } finally {

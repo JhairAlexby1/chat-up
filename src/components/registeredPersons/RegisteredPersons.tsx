@@ -1,5 +1,5 @@
 "use client";
-//short
+//short solicitudes regulares
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./RegisteredPersons.module.css";
@@ -12,14 +12,14 @@ export const RegisteredPersons = () => {
       axios
         .get("http://localhost:3001/usuarios")
         .then((response) => {
-          setUserCount(response.data.length);
+          setUserCount(response.data.length); // Actualiza el estado con los datos recividos 
         })
         .catch((error) => {
           console.error("There was an error!", error);
         });
     }, 5000); // Actualizaxion
 
-    return () => clearInterval(interval); // reset
+    return () => clearInterval(interval); // limpia el estado y la desmonta 
   }, []); 
 
   return (
