@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import React, {useEffect, useState} from 'react';
 import styles from './Chat.module.css';
 import jwt from 'jsonwebtoken';
+import { jwtVerify } from "jose";
 
 interface Mensaje {
   texto: string;
@@ -17,9 +18,11 @@ export const Chat = () => {
   const ws = new WebSocket('ws://localhost:3030');
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [nuevoMensaje, setNuevoMensaje] = useState('');
-  const cookie: string | undefined = Cookies.get('token');
-  // @ts-ignore
-  const user = jwt.verify(cookie, "secret");
+  const cookie = Cookies.get('token') as string;
+  console.log(cookie);
+  const secret = new TextEncoder().encode('secret');
+  const user = jwtVerify(cookie, secret);
+  console.log(user);
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
   if (event.key === 'Enter') {
@@ -41,7 +44,7 @@ export const Chat = () => {
       ws.onopen = () => {
             console.log('Conectado');
       }
-      ws.send(JSON.stringify({ event: 'listening', data: user.id }));
+      ws.send(JSON.stringify({ event: 'listening', data: user.chats[0] }));
         ws.onmessage = (event) => {
             const mensaje = JSON.parse(event.data);
             if (mensaje.event === 'messages')
