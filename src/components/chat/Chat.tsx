@@ -40,6 +40,19 @@ ws.onopen = () => {
   ws.send(JSON.stringify({ event: 'listening'}));
 };
 
+  ws.onmessage = (event) => {
+    const mensaje = JSON.parse(event.data);
+    console.log(mensaje);
+    if (mensaje.event === 'messages') {
+      setMensajes(mensaje.data);
+      console.log(mensaje.data)
+      console.log(mensajes)
+    }
+    if  (mensaje.event === 'message') {
+      ws.send(JSON.stringify({ event: 'listening'}));
+    }
+  };
+
 
 
   const decodeToken = async (token: string) => {
@@ -82,18 +95,7 @@ ws.onopen = () => {
     };
     ws.send(JSON.stringify({ event: 'listening'}));
 
-    ws.onmessage = (event) => {
-      const mensaje = JSON.parse(event.data);
-      console.log(mensaje);
-      if (mensaje.event === 'messages') {
-        setMensajes(mensaje.data);
-        console.log(mensaje.data)
-        console.log(mensajes)
-      }
-      if  (mensaje.event === 'message') {
-        ws.send(JSON.stringify({ event: 'listening'}));
-      }
-    };
+
   
     fetchData();
   
