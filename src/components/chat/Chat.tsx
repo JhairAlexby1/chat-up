@@ -5,6 +5,8 @@ import React, {useEffect, useState} from 'react';
 import styles from './Chat.module.css';
 import jwt from 'jsonwebtoken';
 import { jwtVerify } from "jose";
+import { Palanquin } from "next/font/google";
+import { Console } from "console";
 
 interface Mensaje {
   texto: string;
@@ -34,12 +36,16 @@ export const Chat = () => {
   const [payload, setPayload] = useState<JWTPayloader>({id: '', chats: [], texto: '', usuario: '', conectado: false});
   const token = Cookies.get('token');
 console.log(token);
+ws.onopen = () => {
+  console.log('Conectado');
+  ws.send(JSON.stringify({ event: 'listening'}));
+};
 
   const decodeToken = async (token: string) => {
     const secret = new TextEncoder().encode('secret');
     const decoded = jwt.decode(token, { complete: true });
     if (decoded) {
-      const payload = await jwtVerify(token, secret) as unknown as {
+      const {payload} = await jwtVerify(token, secret) as unknown as {
         chats: any;
         id: unknown; payload: JWTPayloader 
   };
@@ -56,7 +62,8 @@ console.log(token);
 
   const btnEnviarMensaje = () => {
     if (nuevoMensaje.trim() !== '') {
-      ws.send(JSON.stringify({ event: 'message', data: {texto: nuevoMensaje, usuario: payload.payload.id, chat: payload.payload.chats[0] } }));
+      console.log(payload);
+      ws.send(JSON.stringify({ event: 'message', data: {texto: nuevoMensaje, usuario: payload.id, chat: '666252d1058a6610a44840a9' } }));
     }
   };
 
@@ -76,19 +83,18 @@ console.log(token);
   
     fetchData();
   
-    ws.onopen = () => {
-      console.log('Conectado');
-    };
-  
-    ws.send(JSON.stringify({ event: 'listening', data: payload.chats[0] }));
+    
   
     ws.onmessage = (event) => {
       const mensaje = JSON.parse(event.data);
+      console.log(mensaje);
       if (mensaje.event === 'messages') {
         setMensajes(mensaje.data);
       }
     };
-  }, [mensajes, payload.id, token, ws]);
+  
+    
+  }, [mensajes]);
 
   return (
     <div className={styles.contenedor}>
