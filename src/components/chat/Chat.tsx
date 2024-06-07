@@ -5,8 +5,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './Chat.module.css';
 import jwt from 'jsonwebtoken';
 import { jwtVerify } from "jose";
-import { Palanquin } from "next/font/google";
-import { Console } from "console";
+
 
 interface Mensaje {
   texto: string;
@@ -40,6 +39,17 @@ ws.onopen = () => {
   console.log('Conectado');
   ws.send(JSON.stringify({ event: 'listening'}));
 };
+
+  ws.onmessage = (event) => {
+    const mensaje = JSON.parse(event.data);
+    console.log(mensaje);
+    if (mensaje.event === 'messages') {
+      setMensajes(mensaje.data);
+    }
+    if  (mensaje.event === 'message') {
+      ws.send(JSON.stringify({ event: 'listening'}));
+    }
+  };
 
   const decodeToken = async (token: string) => {
     const secret = new TextEncoder().encode('secret');
@@ -85,16 +95,10 @@ ws.onopen = () => {
   
     
   
-    ws.onmessage = (event) => {
-      const mensaje = JSON.parse(event.data);
-      console.log(mensaje);
-      if (mensaje.event === 'messages') {
-        setMensajes(mensaje.data);
-      }
-    };
+
   
     
-  }, [mensajes]);
+  }, [mensajes, token]);
 
   return (
     <div className={styles.contenedor}>
