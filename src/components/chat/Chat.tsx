@@ -45,6 +45,7 @@ ws.onopen = () => {
     console.log(mensaje);
     if (mensaje.event === 'messages') {
       setMensajes(mensaje.data);
+      console.log(mensaje.data)
     }
     if  (mensaje.event === 'message') {
       ws.send(JSON.stringify({ event: 'listening'}));
