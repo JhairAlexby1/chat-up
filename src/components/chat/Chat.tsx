@@ -34,7 +34,7 @@ export const Chat = () => {
   const [nuevoMensaje, setNuevoMensaje] = useState('');
   const [payload, setPayload] = useState<JWTPayloader>({id: '', chats: [], texto: '', usuario: '', conectado: false});
   const token = Cookies.get('token');
-console.log(token);
+
 ws.onopen = () => {
   console.log('Conectado');
   ws.send(JSON.stringify({ event: 'listening'}));
@@ -46,8 +46,10 @@ ws.onopen = () => {
     if (mensaje.event === 'messages') {
       setMensajes(mensaje.data);
       console.log(mensaje.data)
+      console.log(mensajes)
     }
     if  (mensaje.event === 'message') {
+        setMensajes([...mensajes, mensaje.data]);
       ws.send(JSON.stringify({ event: 'listening'}));
     }
   };
