@@ -80,6 +80,7 @@ ws.onopen = () => {
         }
       }
     };
+    ws.send(JSON.stringify({ event: 'listening'}));
 
     ws.onmessage = (event) => {
       const mensaje = JSON.parse(event.data);
