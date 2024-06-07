@@ -21,7 +21,7 @@ interface JWTPayloader {
   conectado: boolean;
 }
 
-
+const ws = new WebSocket('ws://localhost:3030');
 
 
 
@@ -29,7 +29,7 @@ interface JWTPayloader {
 
 
 export const Chat = () => {
-  const ws = new WebSocket('ws://localhost:3030');
+
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [nuevoMensaje, setNuevoMensaje] = useState('');
   const [payload, setPayload] = useState<JWTPayloader>({id: '', chats: [], texto: '', usuario: '', conectado: false});
