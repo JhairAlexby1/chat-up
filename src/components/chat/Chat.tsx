@@ -40,19 +40,7 @@ ws.onopen = () => {
   ws.send(JSON.stringify({ event: 'listening'}));
 };
 
-  ws.onmessage = (event) => {
-    const mensaje = JSON.parse(event.data);
-    console.log(mensaje);
-    if (mensaje.event === 'messages') {
-      setMensajes(mensaje.data);
-      console.log(mensaje.data)
-      console.log(mensajes)
-    }
-    if  (mensaje.event === 'message') {
-        setMensajes([...mensajes, mensaje.data]);
-      ws.send(JSON.stringify({ event: 'listening'}));
-    }
-  };
+
 
   const decodeToken = async (token: string) => {
     const secret = new TextEncoder().encode('secret');
@@ -75,7 +63,6 @@ ws.onopen = () => {
 
   const btnEnviarMensaje = () => {
     if (nuevoMensaje.trim() !== '') {
-      console.log(payload);
       ws.send(JSON.stringify({ event: 'message', data: {texto: nuevoMensaje, usuario: payload.id, chat: '666252d1058a6610a44840a9' } }));
     }
   };
@@ -91,6 +78,19 @@ ws.onopen = () => {
         if (decodedPayload) {
           setPayload({ ...decodedPayload, texto: '', usuario: '', conectado: false, id: decodedPayload.id as string });
         }
+      }
+    };
+
+    ws.onmessage = (event) => {
+      const mensaje = JSON.parse(event.data);
+      console.log(mensaje);
+      if (mensaje.event === 'messages') {
+        setMensajes(mensaje.data);
+        console.log(mensaje.data)
+        console.log(mensajes)
+      }
+      if  (mensaje.event === 'message') {
+        ws.send(JSON.stringify({ event: 'listening'}));
       }
     };
   
