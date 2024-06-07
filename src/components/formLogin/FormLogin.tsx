@@ -4,26 +4,36 @@ import { useState } from "react";
 import styles from "./FormLogin.module.css";
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
+
 
 export const FormLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter()
+  const [userId, setUserId] = useState(null);
 
 
 
- const btnLogin = async () => {
-  try {
-    const response = await axios.post('http://localhost:3001/usuarios/login', {
-      email,
-      password
-    }, {withCredentials: true} );  
-    console.log(response.data);
-    router.push('/homePage');
-  } catch (error) {
-    console.error(error);
+  const btnLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:3001/usuarios/login', {
+        email,
+        password
+      }, { withCredentials: true });
+      console.log(response.data);
+      Cookies.set('userId', response.data.userId);
+      router.push('/homePage');
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Correo electrónico o contraseña incorrectos',
+      });
+    }
   }
-}
 
 
   return (
@@ -31,7 +41,7 @@ export const FormLogin = () => {
       <div className="flex min-h-screen items-center justify-center">
         <div className="relative flex flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
           <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-            Crea Una Nueva Cuenta
+            Inicia sesion
           </h4>
 
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
