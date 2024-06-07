@@ -41,6 +41,14 @@ ws.onopen = () => {
   ws.send(JSON.stringify({ event: 'listening'}));
 };
 
+  ws.onmessage = (event) => {
+    const mensaje = JSON.parse(event.data);
+    console.log(mensaje);
+    if (mensaje.event === 'messages') {
+      setMensajes(mensaje.data);
+    }
+  };
+
   const decodeToken = async (token: string) => {
     const secret = new TextEncoder().encode('secret');
     const decoded = jwt.decode(token, { complete: true });
@@ -85,13 +93,7 @@ ws.onopen = () => {
   
     
   
-    ws.onmessage = (event) => {
-      const mensaje = JSON.parse(event.data);
-      console.log(mensaje);
-      if (mensaje.event === 'messages') {
-        setMensajes(mensaje.data);
-      }
-    };
+
   
     
   }, [mensajes]);
